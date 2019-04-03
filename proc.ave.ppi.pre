@@ -1,0 +1,34 @@
+#!/bin/tcsh
+
+set top_dir = /bcbl/home/public/Mengxing/CHNstory/
+set PPI_dir = $top_dir/analysis/PPI
+set data_dir = $top_dir/data
+
+# the user may specify a single subject to run with
+if ($#argv > 0 ) then
+	set subj = $argv[1]
+else
+	set subj = sub02
+endif
+
+set prefix_3dd = ppi.pre.
+# specify the preprocessed data
+set sub_dir = $data_dir/$subj.results
+
+if ( ! -d $sub_dir ) then
+    echo "$subj.results"  no exsit
+    exit
+endif
+
+echo "################################################"
+echo "################Working on $subj #################"
+echo "#################################################"
+
+cd $sub_dir
+# ------------------------------
+# run the regression analysis
+3dmaskave -quiet -mask $top_dir/analysis/ROIs/Left_AG.niml.dset \
+			${prefix_3dd}errts.${subj}.lh.niml.dset \
+			> ppi.seed.1D
+        
+

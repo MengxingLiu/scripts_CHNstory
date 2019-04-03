@@ -1,0 +1,6 @@
+
+for i in {03..33}; do
+    # tcsh proc.ave.ppi.pre sub$i
+    tcsh cmd.ppi.2.make.regs sub$i
+    tcsh proc.3dd.ppi.postfull sub$i
+done
