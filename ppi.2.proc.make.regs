@@ -18,9 +18,9 @@ else
 endif
 
 if ($#argv > 1 ) then 
-	set roi = $argv[2]
+	set ROI = $argv[2]
 else
-	set roi = Left_AG
+	set ROI = Left_AG
 endif
 
 set sub_dir = $data_dir/$subj.results
@@ -47,7 +47,7 @@ set stim_labs = ( CS NS SW US )
 
 # set stim_dur  = ( 20 20 )       # durations, in seconds
 
-set seed = ppi.seed.1D
+set seed = ppi.seed."$ROI".1D
 set plabel = Laud
 
 # set basis = dmBLOCK
@@ -302,7 +302,7 @@ foreach sind ( `count -digits 1 1 $nstim` )
    set sind2 = `ccalc -form '%02d' $sind`
    set slab = $sind2.$stim_labs[$sind]
 
-   cat $pprev.$slab.r*.PPIdown.1D > $prefix.$slab.$roi.rall.PPI.1D
+   cat $pprev.$slab.r*.PPIdown.1D > $prefix.$slab.$ROI.rall.PPI.1D
 end
 
 # =================================================================
