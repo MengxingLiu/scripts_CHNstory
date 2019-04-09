@@ -1,0 +1,77 @@
+#!/bin/tcsh
+
+set top_dir = /bcbl/home/public/Mengxing/CHNstory/
+set PPI_dir = $top_dir/analysis/PPI
+set data_dir = $top_dir/data
+
+# - basis functions should be consistent across classes
+#   i.e. should not mix GAM/BLOCK
+# - SPMG1 is okay, but no multi-component functions (AM/DM/IM are okay)
+
+# generate PPI regressors: no 3dD commands
+
+# the user may specify a single subject to run with
+if ($#argv > 0 ) then
+	set subj = $argv[1]
+else
+	set subj = sub02
+endif
+
+set sub_dir = $data_dir/$subj.results
+# verify that the results directory does not yet exist
+if ( ! -d $sub_dir ) then
+    echo "$subj.results"  no exsit
+    exit
+endif
+echo "################################################"
+echo "################Working on $subj #################"
+echo "#################################################"
+
+cd $sub_dir
+
+set prefix_3dd = ppi.full.
+
+# ------------------------------
+# run the regression analysis
+foreach hemi ( lh rh )
+    3dDeconvolve -input pb05.$subj.$hemi.r*.scale.niml.dset               \
+        -censor motion_${subj}_censor.1D                                  \
+        -ortvec motion_demean.1D mot_demean                               \
+        -polort 3                                                         \
+        -num_stimts 8                                                     \
+        -stim_times_AM1 1 stimuli/stim_times_CS.01.1D 'dmBLOCK'           \
+        -stim_label 1 CS                                                  \
+        -stim_times_AM1 2 stimuli/stim_times_NS.01.1D 'dmBLOCK'           \
+        -stim_label 2 NS                                                  \
+        -stim_times_AM1 3 stimuli/stim_times_SW.01.1D 'dmBLOCK'           \
+        -stim_label 3 SW                                                  \
+        -stim_times_AM1 4 stimuli/stim_times_US.01.1D 'dmBLOCK'           \
+        -stim_label 4 US                                                  \
+        -stim_file 5 stimuli/p6.Laud.01.CS.rall.PPI.1D                    \
+        -stim_label 5 PPI.CS                                              \
+        -stim_file 6 stimuli/p6.Laud.02.NS.rall.PPI.1D                    \
+        -stim_label 6 PPI.NS                                              \
+        -stim_file 7 stimuli/p6.Laud.03.SW.rall.PPI.1D                    \
+        -stim_label 7 PPI.SW                                              \
+        -stim_file 8 stimuli/p6.Laud.04.US.rall.PPI.1D                    \
+        -stim_label 8 PPI.US                                              \
+        -gltsym 'SYM: NS -CS'                                             \
+        -glt_label 1 NS-CS                                                \
+        -gltsym 'SYM: CS -US'                                             \
+        -glt_label 2 CS-US                                                \
+        -gltsym 'SYM: US -SW'                                             \
+        -glt_label 3 US-SW                                                \
+        -gltsym 'SYM: PPI.NS -PPI.CS'                                     \
+        -glt_label 4 PPI.NS-PPI.CS                                        \
+        -gltsym 'SYM: PPI.CS -PPI.US'                                     \
+        -glt_label 5 PPI.CS-PPI.US                                        \
+        -gltsym 'SYM: PPI.US -PPI.SW'                                     \
+        -glt_label 6 PPI.US-PPI.SW                                        \
+        -jobs 6                                                           \
+        -fout -tout -x1D ${prefix_3dd}X.xmat.1D -xjpeg ${prefix_3dd}X.jpg \
+        -x1D_uncensored ${prefix_3dd}X.nocensor.xmat.1D                   \
+        -errts ${prefix_3dd}errts.${subj}.$hemi.niml.dset                 \
+        -bucket ${prefix_3dd}stats.$subj.$hemi.niml.dset
+end
+
+ 

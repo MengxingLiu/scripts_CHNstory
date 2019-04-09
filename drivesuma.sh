@@ -55,8 +55,8 @@ do
 	do
 	# get view and snap
 		DriveSuma -com viewer_cont -key "$pose" -com viewer_cont -key 'Ctrl+r'
+		sleep 1 # give it a break to change the view and save the fig 
 	done
-	sleep 3
 	mv ./SUMA_Recordings/* ./${image_dir}/${image_pre}/
 	rm -rf ./SUMA_Recordings/
 done
