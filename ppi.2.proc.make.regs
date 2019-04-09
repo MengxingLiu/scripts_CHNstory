@@ -17,6 +17,12 @@ else
 	set subj = sub02
 endif
 
+if ($#argv > 1 ) then 
+	set roi = $argv[2]
+else
+	set roi = Left_AG
+endif
+
 set sub_dir = $data_dir/$subj.results
 # verify that the results directory does not yet exist
 if ( ! -d $sub_dir ) then
@@ -296,7 +302,7 @@ foreach sind ( `count -digits 1 1 $nstim` )
    set sind2 = `ccalc -form '%02d' $sind`
    set slab = $sind2.$stim_labs[$sind]
 
-   cat $pprev.$slab.r*.PPIdown.1D > $prefix.$slab.rall.PPI.1D
+   cat $pprev.$slab.r*.PPIdown.1D > $prefix.$slab.$roi.rall.PPI.1D
 end
 
 # =================================================================
