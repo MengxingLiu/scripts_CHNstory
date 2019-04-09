@@ -20,15 +20,14 @@ ROIlabel=("inf_Occipital" "parsOper" "parsOrbi" \
 			"parsTrian" "mid_Frontal" "Fusiform" \
 			"mid_Temp" "Pole_Temp" "AngularG")
 
-#　set subject dir
-
-if [ $#argv > 0 ]; then
-	subj=$argv[1]
+#set subject dir
+if [ "$#" -gt 0 ]; then
+	subj=$1
 else
 	subj=sub02
 fi
-
-
+echo $subj
+# set 
 home_dir=/export/home/lmengxing/public/Mengxing/CHNstory
 suma_dir=$home_dir/story2016fMRI/$subj/freesurfer/SUMA
 func_dir=$home_dir/data/${subj}.results
@@ -36,10 +35,11 @@ len=${#index[*]} #get the number of ROIs
 
 for ((i=0; i<$len; i++))
 do
-	code=$index[i]
-	ROI=$ROIlabel[i]
+	code=${index[$i]}
+	ROI=${ROIlabel[$i]}
+	cd $func_dir
 	3dcalc -a $suma_dir/std.141.lh.aparc.a2009s.annot.niml.dset\
-			 -expr 'equals(a, $code)' \
+			 -expr "equals(a, $code)" \
 			-prefix "$ROI".lh.niml.dset
 	# generate seed time series, ppi."$ROI".1D
 	3dmaskave -quiet -mask "$ROI".lh.niml.dset \
