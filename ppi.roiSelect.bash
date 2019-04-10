@@ -30,14 +30,19 @@ echo $subj
 # set 
 home_dir=/export/home/lmengxing/public/Mengxing/CHNstory
 suma_dir=$home_dir/story2016fMRI/$subj/freesurfer/SUMA
-func_dir=$home_dir/data/${subj}.results
+sub_dir=$home_dir/data/${subj}.results
 len=${#index[*]} #get the number of ROIs
+
+if [ ! -d $sub_dir ]; then
+    echo "$subj.results"  no exsit
+    exit
+fi
 
 for ((i=0; i<$len; i++))
 do
 	code=${index[$i]}
 	ROI=${ROIlabel[$i]}
-	cd $func_dir
+	cd $sub_dir
 	3dcalc -a $suma_dir/std.141.lh.aparc.a2009s.annot.niml.dset\
 			 -expr "equals(a, $code)" \
 			-prefix "$ROI".lh.niml.dset
@@ -48,6 +53,3 @@ do
 	rm "$ROI".lh.niml.dset
 
 done
-
-
-			

@@ -81,7 +81,9 @@ set ROIlabel = ("inf_Occipital" "parsOper" "parsOrbi" \
 # (script uses 'set seed = ppi.seed.$ROI.1D')
 foreach x(`seq -w 01 33`)
 	foreach ROI ($ROIlabel)
-		tcsh $scriptdir/cmd.ppi.2.make.regs sub$x $ROI
+		tcsh ppi.2.proc.make.regs sub$x $ROI
+		tcsh ppi.3.proc.3dd.postfull sub$x $ROI
+	end
 end
 # and just to see consider:
 #    1dplot -one ppi.seed.1D work.Laud/p7.Laud.sum.PPI.1D
