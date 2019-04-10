@@ -17,6 +17,14 @@ else
 	set subj = sub02
 endif
 
+if ($#argv > 1 ) then
+    set ROI = $argv[2]
+else
+    set ROI = Left_AG
+endif
+
+
+
 set sub_dir = $data_dir/$subj.results
 # verify that the results directory does not yet exist
 if ( ! -d $sub_dir ) then
@@ -29,7 +37,7 @@ echo "#################################################"
 
 cd $sub_dir
 
-set prefix_3dd = ppi.full.
+set prefix_3dd = ppi.full.${ROI}
 
 # ------------------------------
 # run the regression analysis
@@ -47,13 +55,13 @@ foreach hemi ( lh rh )
         -stim_label 3 SW                                                  \
         -stim_times_AM1 4 stimuli/stim_times_US.01.1D 'dmBLOCK'           \
         -stim_label 4 US                                                  \
-        -stim_file 5 stimuli/p6.Laud.01.CS.rall.PPI.1D                    \
+        -stim_file 5 stimuli/p6.Laud.01.CS.${ROI}.rall.PPI.1D             \
         -stim_label 5 PPI.CS                                              \
-        -stim_file 6 stimuli/p6.Laud.02.NS.rall.PPI.1D                    \
+        -stim_file 6 stimuli/p6.Laud.02.NS.${ROI}.rall.PPI.1D             \
         -stim_label 6 PPI.NS                                              \
-        -stim_file 7 stimuli/p6.Laud.03.SW.rall.PPI.1D                    \
+        -stim_file 7 stimuli/p6.Laud.03.SW.${ROI}.rall.PPI.1D             \
         -stim_label 7 PPI.SW                                              \
-        -stim_file 8 stimuli/p6.Laud.04.US.rall.PPI.1D                    \
+        -stim_file 8 stimuli/p6.Laud.04.US.${ROI}.rall.PPI.1D             \
         -stim_label 8 PPI.US                                              \
         -gltsym 'SYM: NS -CS'                                             \
         -glt_label 1 NS-CS                                                \
@@ -71,7 +79,7 @@ foreach hemi ( lh rh )
         -fout -tout -x1D ${prefix_3dd}X.xmat.1D -xjpeg ${prefix_3dd}X.jpg \
         -x1D_uncensored ${prefix_3dd}X.nocensor.xmat.1D                   \
         -errts ${prefix_3dd}errts.${subj}.$hemi.niml.dset                 \
-        -bucket ${prefix_3dd}stats.$subj.$hemi.niml.dset
+        -bucket ${prefix_3dd}stats.${subj}.$hemi.niml.dset
 end
 
  
