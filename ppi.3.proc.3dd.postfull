@@ -37,7 +37,7 @@ echo "#################################################"
 
 cd $sub_dir
 
-set prefix_3dd = ppi.full.${ROI}
+set prefix_3dd = ppi.full.${ROI}.
 
 # ------------------------------
 # run the regression analysis
