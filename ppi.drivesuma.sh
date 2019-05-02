@@ -34,11 +34,11 @@ DriveSuma -com viewer_cont -key:r2:d z -key 'Ctrl+left' -key a
 
 # load dataset 
 # rh is automatically loaded if you are using a both hemisphere spec in the beginning.
-DriveSuma -com surf_cont -load_dset lh_group_MVM.niml.dset -surf_label lh.inflated
-DriveSuma -com surf_cont -load_dset rh_group_MVM.niml.dset -surf_label rh.inflated
+DriveSuma -com surf_cont -load_dset PPI.$roi.lh.niml.dset -surf_label lh.inflated
+DriveSuma -com surf_cont -load_dset PPI.$roi.rh.niml.dset -surf_label rh.inflated
 # generate an array to store the index of the subbricks we need from MVM data
 
-image_dir='GLM_img'
+image_dir='PPI_$roi'
 index=(`seq 4 2 44`)   # only have the beta value subbricks
 subbrickLabel=("Listen_NS" "Listen_CS" "Listen_US" "Listen_SW" \
                                 "Listen_CS-NS" "Listen_US-NS" "Listen_SW-NS" \
