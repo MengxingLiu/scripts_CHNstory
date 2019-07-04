@@ -68,7 +68,7 @@ do
 
         DriveSuma -com surf_cont -surf_label $hemi.inflated \
         -I_sb $Tindex -T_sb $Tindex -I_range -9 \
-		-T_val 0.001p -Clst -1 280
+		-T_val 0.01p -Clst -1 260
         DriveSuma -com surf_cont -surf_label $hemi.inflated \
         -I_sb $Tindex -T_sb $Tindex -UseClst y \
 		-switch_cmap "Spectrum:red_to_blue+gap"
