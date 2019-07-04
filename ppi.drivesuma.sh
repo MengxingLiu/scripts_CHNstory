@@ -38,7 +38,7 @@ DriveSuma -com surf_cont -load_dset PPI.$roi.lh.niml.dset -surf_label lh.inflate
 DriveSuma -com surf_cont -load_dset PPI.$roi.rh.niml.dset -surf_label rh.inflated
 # generate an array to store the index of the subbricks we need from MVM data
 
-image_dir='PPI_$roi'
+image_dir=PPI_$roi
 index=(`seq 4 2 44`)   # only have the beta value subbricks
 subbrickLabel=("Listen_NS" "Listen_CS" "Listen_US" "Listen_SW" \
                                 "Listen_CS-NS" "Listen_US-NS" "Listen_SW-NS" \
