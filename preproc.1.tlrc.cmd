@@ -19,10 +19,9 @@ set surf_dir = $top_dir/$subj/freesurfer
 # run afni_proc.py to create a single subject processing script
 afni_proc.py -subj_id $subj                                      \
         -script proc.$subj -scr_overwrite                        \
-        -blocks tshift align volreg surf blur scale regress \
-        -surf_anat $surf_dir/SUMA/"$subj"_SurfVol+orig.HEAD    \
-        -surf_spec $surf_dir/SUMA/std_"$subj"_?h.spec     \
+        -blocks despike tshift align tlrc volreg blur scale regress \
         -copy_anat $anat_dir/Anatomical+orig                     \
+        -tlrc_base MNI152_T1_1mm.nii.gz                          \
         -tcat_remove_first_trs 6                                 \
         -remove_preproc_files                                    \
         -dsets                                                   \
@@ -37,18 +36,20 @@ afni_proc.py -subj_id $subj                                      \
         -blur_size 6.0                                           \
         -regress_stim_times                                      \
             $stim_dir/stim_times_CS.01.1D                                \
-            $stim_dir/stim_times_NS.01.1D                                \
+            $stim_dir/stim_times_nNS.01.1D                                \
             $stim_dir/stim_times_SW.01.1D                                \
             $stim_dir/stim_times_US.01.1D                                \
+            $stim_dir/stim_times_aNS.01.1D                                \
         -regress_stim_labels                                     \
-            CS NS SW US                                          \
+            CS nNS SW US aNS                                          \
         -regress_basis 'dmBLOCK'                                    \
         -regress_stim_types AM1                                  \
         -regress_censor_motion 0.3                               \
         -regress_opts_3dD                                        \
-            -gltsym 'SYM: NS -CS' -glt_label 1 NS-CS             \
+            -gltsym 'SYM: nNS -CS' -glt_label 1 nNS-CS             \
             -gltsym 'SYM: CS -US' -glt_label 2 CS-US             \
             -gltsym 'SYM: US -SW' -glt_label 3 US-SW             \
+            -gltsys 'SYM: nNS -aNS' -glt_label 4 nNS-aNS             \
             -jobs 6                                              \
         -regress_make_ideal_sum sum_ideal.1D
  
