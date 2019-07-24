@@ -40,7 +40,6 @@ cd $sub_dir
 #   - PPI label (e.g. Lamy.test1)
 #   - seed time series (afni_proc.py can generate example)
 #   - NT per run, TR, TRnup
-rm ppi.full.*
 rm -rf work.Laud
 set stim_files = ( stimuli/stim_times_*.01.1D )
 set stim_labs = ( CS NS SW US )
