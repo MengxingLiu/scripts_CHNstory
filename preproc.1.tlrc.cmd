@@ -21,7 +21,7 @@ afni_proc.py -subj_id $subj                                      \
         -script proc.$subj -scr_overwrite                        \
         -blocks despike tshift align tlrc volreg blur scale regress \
         -copy_anat $anat_dir/Anatomical+orig                     \
-        -tlrc_base MNI152_T1_1mm.nii.gz                          \
+        -tlrc_base MNI152_T1_2009c+tlrc                          \
         -tcat_remove_first_trs 6                                 \
         -remove_preproc_files                                    \
         -dsets                                                   \
@@ -33,6 +33,7 @@ afni_proc.py -subj_id $subj                                      \
         -align_opts_aea -cost lpc+ZZ                             \
         -volreg_align_to third                                   \
         -volreg_align_e2a                                        \
+        -volreg_tlrc_warp                                       \
         -blur_size 6.0                                           \
         -regress_stim_times                                      \
             $stim_dir/stim_times_CS.01.1D                                \
@@ -49,7 +50,7 @@ afni_proc.py -subj_id $subj                                      \
             -gltsym 'SYM: nNS -CS' -glt_label 1 nNS-CS             \
             -gltsym 'SYM: CS -US' -glt_label 2 CS-US             \
             -gltsym 'SYM: US -SW' -glt_label 3 US-SW             \
-            -gltsys 'SYM: nNS -aNS' -glt_label 4 nNS-aNS             \
+            -gltsym 'SYM: nNS -aNS' -glt_label 4 nNS-aNS             \
             -jobs 6                                              \
         -regress_make_ideal_sum sum_ideal.1D
  

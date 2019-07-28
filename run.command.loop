@@ -1,7 +1,12 @@
 
 for i in {04..33}; do
-    # tcsh proc.ave.ppi.pre sub$i
+	subj=sub$i
+	dir=/bcbl/home/public/Mengxing/CHNstory/story2016fMRI/"$subj"/
+	if [ -d $dir ]	; then
+    
+# tcsh proc.ave.ppi.pre sub$i
    #  tcsh cmd.ppi.2.make.regs sub$i
    #  tcsh proc.3dd.ppi.postfull sub$i
-	tcsh proc.sub02 sub$i
+	tcsh proc.sub02 $subj
+	fi
 done
